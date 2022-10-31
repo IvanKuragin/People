@@ -15,7 +15,11 @@ public class PersonBuilder {
     }
 
     public PersonBuilder setAge(int age) {
-        this.age = age;
+        if (age < 0 || age > 100) {
+            throw new IllegalArgumentException("Вы указали неверный возраст");
+        } else {
+            this.age = age;
+        }
         return this;
     }
 
@@ -25,16 +29,9 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        try {
             if (surname == null) {
                 throw new IllegalStateException("Вы не указали фамилию");
             }
-            if (age < 0 || age > 100) {
-                throw new IllegalArgumentException("Вы указали неверный возраст");
-            }
-        } catch (IllegalStateException | IllegalArgumentException error) {
-            error.printStackTrace();
-        }
         return new Person(name, surname, age, city);
     }
 }
